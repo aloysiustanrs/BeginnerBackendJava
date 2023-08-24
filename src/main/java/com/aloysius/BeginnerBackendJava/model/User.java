@@ -1,18 +1,22 @@
 package com.aloysius.BeginnerBackendJava.model;
 
+import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+
+@Entity
+@Table(name = "UserList")
+@Data
 public class User {
 
-    @Getter
-    @Setter
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
     private String name;
-    @Getter
-    @Setter
     private int age;
-    @Getter
-    @Setter
     private String email;
 
 
@@ -20,6 +24,10 @@ public class User {
         this.name = name;
         this.age = age;
         this.email = email;
+    }
+
+    public User() {
+        // Default constructor
     }
 
     @Override
