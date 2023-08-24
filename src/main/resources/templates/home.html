@@ -15,7 +15,38 @@
 
 <h2>Users:</h2>
 <ul>
-    <li th:each="user : ${userList}" th:text="${user}"></li>
+    <li th:each="user : ${userList}">
+        <p th:text="${user.name}"></p>
+        <p th:text="'Age: ' + ${user.age}"></p>
+        <p th:text="'Email: ' + ${user.email}"></p>
+        <button
+                th:attr="data-user-id=${user.id}"
+                onclick="removeUser(this)"
+        >Remove</button>
+    </li>
 </ul>
+
+
+<script>
+    function removeUser(button) {
+
+    const userId = button.getAttribute('data-user-id'); // Get user ID
+
+    if (confirm('Are you sure you want to delete this user?')) {
+        fetch('/deleteUser/' + userId, {
+            method: 'DELETE',
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.reload(); // Refresh the page after deletion
+            } else {
+                console.error('Error deleting user:', response.statusText);
+            }
+        })
+        .catch(error => console.error('Error deleting user:', error));
+    }
+}
+
+</script>
 </body>
 </html>

@@ -19,4 +19,14 @@ public class UserService {
     public void addUser(User newUser){
         userRepository.save(newUser);
     }
+
+    public boolean deleteUser(int id){
+
+        if (id == -1) {
+            return false; // User not found
+        }
+
+        userRepository.deleteById(id);
+        return true; // User deleted successfully
+    }
 }
