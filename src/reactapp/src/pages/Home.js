@@ -3,39 +3,39 @@ import axios from 'axios';
 import './Home.css';
 
 const Home = () => {
-    const [userList, setUserList] = useState([]);
+    const [employeeList, setEmployeeList] = useState([]);
     const [name, setName] = useState('');
     const [age, setAge] = useState('');
     const [email, setEmail] = useState('');
 
     useEffect(() => {
-        fetchUserData(); // Fetch user data on component mount
+        fetchEmployeeData(); // Fetch employee data on component mount
     }, []);
 
-    const fetchUserData = () => {
-        axios.get('http://localhost:8080/api/users')
+    const fetchEmployeeData = () => {
+        axios.get('http://localhost:8080/api/employees')
         .then(response => {
-            setUserList(response.data);
+            setEmployeeList(response.data);
         })
         .catch(error => {
             console.error('Error fetching data:', error);
         });
     };
 
-    const addUser = () => {
-        const newUser = {
+    const addEmployee = () => {
+        const newEmployee = {
             name: name,
             age: age,
             email: email
         };
     
-        axios.post('http://localhost:8080/api/addUser', newUser)
+        axios.post('http://localhost:8080/api/addEmployee', newEmployee)
         .then(response => {
-            console.log('User added:', response.data);
-            fetchUserData(); // Fetch updated user data after adding
+            console.log('Employee added:', response.data);
+            fetchEmployeeData(); // Fetch updated employee data after adding
         })
         .catch(error => {
-            console.error('Error adding user:', error);
+            console.error('Error adding employee:', error);
         });
     
         setName('');
@@ -44,20 +44,20 @@ const Home = () => {
     };
     
 
-    const deleteUser = (userId) => {
-        axios.delete(`http://localhost:8080/api/deleteUser/${userId}`)
+    const deleteEmployee = (employeeId) => {
+        axios.delete(`http://localhost:8080/api/deleteEmployee/${employeeId}`)
         .then(response => {
-            console.log('User deleted:', userId);
-            fetchUserData(); // Fetch updated user data after deleting
+            console.log('Employee deleted:', employeeId);
+            fetchEmployeeData(); // Fetch updated employee data after deleting
         })
         .catch(error => {
-            console.error('Error deleting user:', error);
+            console.error('Error deleting employee:', error);
         });
     };
 
     return (
-        <div className="user-list-container">
-            <h1>User List</h1>
+        <div className="employee-list-container">
+            <h1>Employee List</h1>
             <form>
                 <input
                     type="text"
@@ -80,11 +80,11 @@ const Home = () => {
                     onChange={e => setEmail(e.target.value)}
                     required
                 />
-                <button type="button" onClick={addUser}>
-                    Add User
+                <button type="button" onClick={addEmployee}>
+                    Add Employee
                 </button>
             </form>
-            <h2>Users:</h2>
+            <h2>Employee:</h2>
             <table>
                 <thead>
                     <tr>
@@ -95,13 +95,13 @@ const Home = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {userList.map(user => (
-                        <tr key={user.id}>
-                            <td>{user.name}</td>
-                            <td>{user.age}</td>
-                            <td>{user.email}</td>
+                    {employeeList.map(employee => (
+                        <tr key={employee.id}>
+                            <td>{employee.name}</td>
+                            <td>{employee.age}</td>
+                            <td>{employee.email}</td>
                             <td>
-                                <button onClick={() => deleteUser(user.id)}>Delete</button>
+                                <button onClick={() => deleteEmployee(employee.id)}>Delete</button>
                             </td>
                         </tr>
                     ))}

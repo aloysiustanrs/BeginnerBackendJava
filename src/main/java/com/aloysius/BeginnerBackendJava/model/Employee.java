@@ -2,14 +2,12 @@ package com.aloysius.BeginnerBackendJava.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 
 @Entity
 @Table(name = "UserList")
 @Data
-public class User {
+public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,13 +18,13 @@ public class User {
     private String email;
 
 
-    public User(String name, int age, String email) {
+    public Employee(String name, int age, String email) {
         this.name = name;
         this.age = age;
         this.email = email;
     }
 
-    public User() {
+    public Employee() {
         // Default constructor
     }
 
